@@ -16,5 +16,9 @@ jobs:
           node-version: 16.x
       - name: Install Dependencies
         run : npm install
-      - name: Test Project
-        run: npm test
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: nitinanr
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
