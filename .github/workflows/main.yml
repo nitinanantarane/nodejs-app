@@ -1,24 +1,27 @@
-name: CICD
+name: Deploy to Azure App Service
 
 on:
-  push:
-    branches: main
-    
-jobs:
-  build:
+  push: 
+    branches: 
+      - main
+
+jobs: 
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v3
-      - name: Set Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
+      - name: Setup Node.js version
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '18.x'
       - name: Install Dependencies
-        run : npm install
+        run: npm install
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
-        with: 
+        with:
           app-name: nitinanr
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          package: .       
+
+              
